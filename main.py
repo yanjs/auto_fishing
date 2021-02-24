@@ -8,11 +8,15 @@ def main(left, up, right, down):
     while True:
         sleep(.5)
         screenshot = ImageGrab.grab()
-        screenw = screenshot.size[0]
-        screenh = screenshot.size[1]
-        text_box = (screenw * left, screenh * up, screenw * right, screenh * down)
+        screenwidth = screenshot.size[0]
+        screenheight = screenshot.size[1]
+        text_box = (screenwidth * left, screenheight * up, screenwidth * right, screenheight * down)
         text_img = screenshot.crop(text_box)
         text = pytesseract.image_to_string(text_img)
+        if 'Splashing' not in text:
+            mouse.click(Button.right, 1)
+            sleep(4)
+            continue
         if 'splashes' in text:
             mouse.click(Button.right, 1)
             sleep(.5)
@@ -20,4 +24,4 @@ def main(left, up, right, down):
             sleep(4)
 
 if __name__ == "__main__":
-    main(.9, .75, 1, .95)
+    main(.8, .7, 1, .95)
